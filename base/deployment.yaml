@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-ap-deployment
+  labels:
+    deployment: web-ap
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      pod: web-ap
+  template:
+    spec:
+      containers:
+      - name: web
+        image: 619071321369.dkr.ecr.ap-northeast-1.amazonaws.com/eksargocd-ecr-repository-web:first
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        env:
+          - name: PHP_UPSTREAM
+            value: "localhost:9000"
+      - name: ap
+        image: 619071321369.dkr.ecr.ap-northeast-1.amazonaws.com/eksargocd-ecr-repository-ap:first
+        ports:
+        - containerPort: 9000
+        livenessProbe:
+          tcpSocket:
+            port: 9000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        env:
+          - name: DB_HOST
+            value: aws_db_instance.rds.host
+          - name: DB_NAME
+            value: aws_db_instance.rds.db_name
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: rds-secret
+                key: DB_USER
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: rds-secret
+                key: DB_PASSWORD
+    metadata:
+      labels:
+        pod: web-ap
