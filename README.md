@@ -1,0 +1,1 @@
+WEB-APのKubernetesマニフェスト用リポジトリです
