@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: 619071321369.dkr.ecr.ap-northeast-1.amazonaws.com/eksargocd-ecr-repository-web:sha-b13cef652e37a2ef47747fe7779c758324fdf236
+        image: 619071321369.dkr.ecr.ap-northeast-1.amazonaws.com/eksargocd-ecr-repository-web:sha-6e86d8a774fc09e12f010c841047fdb412f0a70d
         ports:
         - containerPort: 8080
         livenessProbe:
@@ -27,7 +27,7 @@ spec:
           - name: PHP_UPSTREAM
             value: "localhost:9000"
       - name: ap
-        image: 619071321369.dkr.ecr.ap-northeast-1.amazonaws.com/eksargocd-ecr-repository-ap:sha-b13cef652e37a2ef47747fe7779c758324fdf236
+        image: 619071321369.dkr.ecr.ap-northeast-1.amazonaws.com/eksargocd-ecr-repository-ap:sha-6e86d8a774fc09e12f010c841047fdb412f0a70d
         ports:
         - containerPort: 9000
         livenessProbe:
