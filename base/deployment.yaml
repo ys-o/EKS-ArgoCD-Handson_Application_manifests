@@ -47,7 +47,7 @@ spec:
           failureThreshold: 3
         env:
           - name: DB_HOST
-            value: eksargocd-rds.c9mqgi6c0ya0.ap-northeast-1.rds.amazonaws.com
+            value: 
           - name: DB_NAME
             value: eksargocd_rds
           - name: DB_USER
